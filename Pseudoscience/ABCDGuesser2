@@ -1,0 +1,157 @@
+import components.simplereader.SimpleReader;
+import components.simplereader.SimpleReader1L;
+import components.simplewriter.SimpleWriter;
+import components.simplewriter.SimpleWriter1L;
+import components.utilities.FormatChecker;
+
+/**
+ * Put a short phrase describing the program here.
+ *
+ * @author Put your name here
+ *
+ */
+public final class ABCDGuesser2 {
+
+    /**
+     * Private constructor so this utility class cannot be instantiated.
+     */
+    private ABCDGuesser2() {
+    }
+
+    /**
+     * Repeatedly asks the user for a positive real number until the user enters
+     * one. Returns the positive real number.
+     *
+     * @param in
+     *            the input stream
+     * @param out
+     *            the output stream
+     * @return a positive real number entered by the user
+     */
+
+    private static double getPositiveDouble(SimpleReader in, SimpleWriter out) {
+        double num = 0;
+        String check = in.nextLine();
+        if (FormatChecker.canParseDouble(check)) {
+            num = Double.parseDouble(check);
+        }
+        while (num <= 0 || !FormatChecker.canParseDouble(check)) {
+            out.println(" Enter a positive real number");
+            check = in.nextLine();
+
+        }
+
+        return num;
+    }
+
+    /**
+     * Repeatedly asks the user for a positive real number not equal to 1.0
+     * until the user enters one. Returns the positive real number.
+     *
+     * @param in
+     *            the input stream
+     * @param out
+     *            the output stream
+     * @return a positive real number not equal to 1.0 entered by the user
+     */
+    private static double getPositiveDoubleNotOne(SimpleReader in,
+            SimpleWriter out) {
+        double num = 0;
+        boolean anw = true;
+        while (anw) {
+            out.println(" Enter a positive number not equal to 1.0");
+            String check = in.nextLine();
+            if (FormatChecker.canParseDouble(check)) {
+                if (Double.parseDouble(check) >= 2) {
+                    num = Double.parseDouble(check);
+                    anw = false;
+                }
+            }
+        }
+
+        return num;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    private static double deJagerformula(int a, int b, int c, int d, double w,
+            double x, double y, double z, double[] charm) {
+        // This suppose to be deJager formula w^a*x^b*y^c*z^d
+        double answer = Math.pow(w, charm[a]) * Math.pow(x, charm[b])
+                * Math.pow(y, charm[c]) * Math.pow(z, charm[d]);
+
+        return answer;
+        /*
+         *
+         * Put your code for myMethod here
+         */
+    }
+
+    /**
+     * Main method.
+     *
+     * @param args
+     *            the command line arguments
+     */
+    public static void main(String[] args) {
+        SimpleReader in = new SimpleReader1L();
+        SimpleWriter out = new SimpleWriter1L();
+        out.print("What is the constant");
+        double constant = getPositiveDouble(in, out);
+        out.println("Enter the positive number (first)");
+        double w = getPositiveDoubleNotOne(in, out);
+        out.println("Enter second positive number:");
+        double x = getPositiveDoubleNotOne(in, out);
+        out.println("Enter Third positive number:");
+        double y = getPositiveDoubleNotOne(in, out);
+        out.println("Enter fourth positive number:");
+        double z = getPositiveDoubleNotOne(in, out);
+        double error = .1;
+        double guess = 0;
+        final double[] charm = { -5, -4, -3, -2, -1, -1 / 2, -1 / 3, -1 / 4, 0,
+                1 / 4, 1 / 3, 1 / 2, 1, 2, 3, 4, 5 };
+        double[] nums = { 0, 1, 2, 3, 4 };
+        int a = 0, b = 0, c = 0, d = 0;
+
+        for (a = 0; a < nums.length; a++) {
+            for (b = 0; b < nums.length; b++) {
+                for (c = 0; c < nums.length; c++) {
+                    for (d = 0; d < nums.length; d++) {
+
+                        double maybe = deJagerformula(a, b, c, d, w, x, y, z,
+                                charm);
+
+                        if (Math.abs((constant - maybe) / maybe) < error) {
+                            nums[0] = charm[a];
+                            nums[1] = charm[b];
+                            nums[2] = charm[c];
+                            nums[3] = charm[d];
+                            guess = maybe;
+                            error = Math.abs((constant - maybe) / maybe);
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        out.println("Your Constant: " + constant);
+        out.println("Best approximation: " + guess);
+        out.println("Combination of exponents:" + nums[0] + " ," + nums[1]
+                + " ," + nums[2] + " ," + nums[3]);
+        out.println("The Error is " + (error * 100) + " %");
+        /*
+         *
+         * Close input and output streams
+         */
+        in.close();
+        out.close();
+    }
+}
