@@ -1,1 +1,68 @@
+import components.simplereader.SimpleReader;
+import components.simplereader.SimpleReader1L;
+import components.simplewriter.SimpleWriter;
+import components.simplewriter.SimpleWriter1L;
+
+/**
+ * Put a short phrase describing the program here.
+ *
+ * @author Put your name here
+ *
+ */
+public final class Newton1 {
+
+    /**
+     * Private constructor so this utility class cannot be instantiated.
+     */
+    private Newton1() {
+    }
+
+    /**
+     * Computes estimate of square root of x to within relative error 0.01%.
+     *
+     * @param x
+     *            positive number to compute square root of
+     * @return estimate of square root
+     */
+    private static double sqrt(double x) {
+
+        double root = 0.5 * (x + x / x);
+
+        while (((root * root) - x) >= (0.0001 * 0.0001)) {
+            root = (root + x / root) * 0.5;
+
+        }
+        return root;
+    }
+
+    /**
+     * Main method.
+     *
+     * @param args
+     *            the command line arguments
+     */
+    public static void main(String[] args) {
+        SimpleReader in = new SimpleReader1L();
+        SimpleWriter out = new SimpleWriter1L();
+
+        out.print("Will you like to find the square root of a number (y/n)?");
+        String answer = in.nextLine();
+        char c = answer.charAt(0);
+        while (c == 'y') {
+            out.print("What number? ");
+            double x = in.nextInteger();
+            double r = sqrt(x);
+            System.out.println(r);
+            out.print("Do you wish to continue ?");
+            String con = in.nextLine();
+            char i = con.charAt(0);
+            if (i != 'y') {
+                c++;
+                out.print("bye");
+            }
+        }
+        in.close();
+        out.close();
+    }
+}
 
