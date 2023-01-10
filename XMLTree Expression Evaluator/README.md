@@ -46,9 +46,9 @@ Open the src folder of this project and then open (default package). As a starti
 Follow the link to XMLTreeIntExpressionEvaluator.java, select all the code on that page and copy it to the clipboard; then open the XMLTreeIntExpressionEvaluator.java file in Eclipse and paste the code to replace the file contents. Save the file.
 Method
 Edit XMLTreeIntExpressionEvaluator.java to implement the first version of the evaluate method using recursion. This is the one that uses int for the operand type and computes the value of the expression with Java's built-in integer operators. Here is the contract:
+
 /**
  * Evaluate the given expression.
- * 
  * @param exp
  *            the {@code XMLTree} representing the expression
  * @return the value of the expression
@@ -58,14 +58,15 @@ Edit XMLTreeIntExpressionEvaluator.java to implement the first version of the ev
  * </pre>
  * @ensures evaluate = [the value of the expression]
  */
+
 private static int evaluate(XMLTree exp) {...}
 As the requires clause states, you can assume that the given XMLTree is a well-formed XML expression and you do not need to check for errors. You can use the Integer.parseInt(String) static method to convert a String value into an integer.
 Run the XMLTreeIntExpressionEvaluator program to test your implementation of evaluate.
 Copy XMLTreeIntExpressionEvaluator.java to create XMLTreeNNExpressionEvaluator.java.
 Edit XMLTreeNNExpressionEvaluator.java to implement the second version of the evaluate method using recursion. This is the one that uses NaturalNumber for the operand type and computes the value of the expression with NaturalNumber's methods. Make sure you update the contract and the implementation to match the following:
+
 /**
  * Evaluate the given expression.
- * 
  * @param exp
  *            the {@code XMLTree} representing the expression
  * @return the value of the expression
@@ -75,6 +76,7 @@ Edit XMLTreeNNExpressionEvaluator.java to implement the second version of the ev
  * </pre>
  * @ensures evaluate = [the value of the expression]
  */
+
 private static NaturalNumber evaluate(XMLTree exp) {...}
 Run the XMLTreeNNExpressionEvaluator program to test your implementation of evaluate.
 Add checks for the preconditions (requires clause) of all the NaturalNumber methods you invoke in your solution that have a precondition and make sure you output descriptive error messages. Note that even though you can assume the given XMLTree is a well-formed XML expression, it is possible that one or more of the NaturalNumber methods may be called with a violated precondition (e.g., divide by 0). If you find any violated precondition, you should stop the evaluation of the expression and report a fatal error. Use the components.utilities.Reporter's fatalErrorToConsole method to report the error and make the program terminate.
